@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 function printReport() {
     total=0
@@ -6,9 +6,9 @@ function printReport() {
 
     echo "Expenses: $(date)"
 
-    type=0
-    amount=1
-    while read -a expense ; do
+    type=1
+    amount=2
+    while read -A expense ; do
         if [ "${expense[$type]}" = "DINNER" ] || [ "${expense[$type]}" = "BREAKFAST" ] ; then
             meals=$(( ${meals} + ${expense[$amount]} ))
         fi
