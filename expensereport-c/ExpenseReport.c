@@ -1,53 +1,50 @@
+#include "ExpenseReport.h"
+
+#include <limits.h>
+#include <stdbool.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 
-enum Type {
-    DINNER,
-    BREAKFAST,
-    CAR_RENTAL
-};
-
-struct Expense {
-    enum Type type;
-    int amount;
-};
-
-void printExpenses(struct Expense *expenses[], size_t numExpenses) {
-    int total = 0;
+int sumMealExpenses(const struct Expense expenses[], size_t numExpenses) {
     int mealExpenses = 0;
+    for (size_t i = 0; i < numExpenses; i++)
+        if (Expense_isMeal(&expenses[i]))
+            mealExpenses += expenses[i].amount;
+    return mealExpenses;
+}
 
+int sumTotal(const struct Expense expenses[], size_t numExpenses) {
+    int total = 0;
+    for (size_t i = 0; i < numExpenses; i++)
+        total += expenses[i].amount;
+    return total;
+}
+
+void printReportHeader() {
     time_t now;
     if (time(&now) == -1)
         return;
+    printf("Expenses %s", ctime(&now));
+}
 
-    printf("Expenses %s\n", ctime(&now));
+void printReportDetail(const struct Expense *expense) {
+    char *expenseOverLimitMarker = Expense_isOverLimit(expense) ? "X" : " ";
+    printf("%s\t%d\t%s\n", Expense_getName(expense), expense->amount, expenseOverLimitMarker);
+}
 
-    for (size_t i = 0; i < numExpenses; i++) {
-        struct Expense *expense = expenses[i];
+void printReportDetails(struct Expense expenses[], size_t numExpenses) {
+    for (size_t i = 0; i < numExpenses; i++)
+        printReportDetail(&expenses[i]);
+}
 
-        if (expense->type == DINNER || expense->type == BREAKFAST) {
-            mealExpenses += expense->amount;
-        }
+void printReportSummary(struct Expense expenses[], size_t numExpenses) {
+    printf("Meal expenses: %d\n", sumMealExpenses(expenses, numExpenses));
+    printf("Total expenses: %d\n", sumTotal(expenses, numExpenses));
+}
 
-        char *expenseName;
-        switch (expense->type) {
-        case DINNER:
-            expenseName = "Dinner";
-            break;
-        case BREAKFAST:
-            expenseName = "Breakfast";
-            break;
-        case CAR_RENTAL:
-            expenseName = "Car Rental";
-            break;
-        }
-
-        char *mealOverExpensesMarker = ((expense->type == DINNER && expense->amount > 5000) || (expense->type == BREAKFAST && expense->amount > 1000)) ? "X" : " ";
-
-        printf("%s\t%d\t%s\n", expenseName, expense->amount, mealOverExpensesMarker);
-        total += expense->amount;
-    }
-
-    printf("Meal expenses: %d\n", mealExpenses);
-    printf("Total expenses: %d\n", total);
+void printReport(struct Expense expenses[], size_t numExpenses) {
+    printReportHeader();
+    printReportDetails(expenses, numExpenses);
+    printReportSummary(expenses, numExpenses);
 }
