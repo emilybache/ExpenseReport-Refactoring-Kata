@@ -1,0 +1,8 @@
+Expense Report <date0>
+Dinner 	 5000 	  
+Dinner 	 5001 	 X
+Breakfast 	 1000 	  
+Breakfast 	 1001 	 X
+Car Rental 	 200 	  
+Meals: 12002
+Total: 12202
