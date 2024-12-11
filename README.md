@@ -1,4 +1,5 @@
-# ExpenseReport
+# ExpenseReport Refactoring Kata
+
 ![License: CC-BY-SA](by-sa.svg)
 The ExpenseReport legacy code refactoring kata in various languages.
 
