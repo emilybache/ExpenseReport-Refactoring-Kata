@@ -29,8 +29,7 @@ def test_expense_report():
 
         answer = fake_stdout.getvalue()
         approvals.verify(answer, options=Options().add_scrubber(
-            # TODO: Use DateScrubber.get_scrubber_for("Wed Dec 11 14:59:44 2024")
-            DateScrubber("[a-zA-Z]{3} [a-zA-Z]{3} \\d{2} \\d{2}:\\d{2}:\\d{2} \\d{4}").scrub
+            DateScrubber.get_scrubber_for("Wed Dec 11 14:59:44 2024")
         ))
     finally:
         sys.stdout = orig_sysout
