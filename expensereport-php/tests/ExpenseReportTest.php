@@ -6,6 +6,7 @@ use Expenses\Expense;
 use Expenses\ExpenseReport;
 use Expenses\ExpenseType;
 use PHPUnit\Framework\TestCase;
+use ApprovalTests\Approvals;
 
 class ExpenseReportTest extends TestCase {
 
@@ -27,7 +28,9 @@ class ExpenseReportTest extends TestCase {
         $report->print_report($expenses);
 
         $output = ob_get_clean();
-        $this->assertEquals("hello world!", $output);
+        // drop the first line because it varies. Crude but effective.
+        $output = preg_replace('/^.+\n/', '', $output);
+        Approvals::verifyString($output);
     }
 }
 

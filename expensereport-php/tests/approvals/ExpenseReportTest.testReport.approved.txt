@@ -1,0 +1,7 @@
+Dinner	5000	 
+Dinner	5001	X
+Breakfast	1000	 
+Breakfast	1001	X
+Car Rental	200	 
+Meal Expenses: 12002
+Total Expenses: 12202
