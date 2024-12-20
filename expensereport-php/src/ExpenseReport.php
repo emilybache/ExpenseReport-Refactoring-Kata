@@ -1,22 +1,9 @@
 <?php
 
-abstract class ExpenseType {
-    const DINNER = 1;
-    const BREAKFAST = 2;
-    const CAR_RENTAL = 3;
-}
-
-class Expense {
-    public $type;
-    public $amount;
-    function __construct($type, $amount) {
-        $this->type = $type;
-        $this->amount = $amount;
-    }
-}
+namespace Expenses;
 
 class ExpenseReport {
-    function print_report($expenses) {
+    public function print_report($expenses) {
         $mealExpenses = 0;
         $total = 0;
         $date = date("Y-m-d h:i:sa");
